@@ -180,6 +180,20 @@ func GetSqlitePath() string {
 	return defaultSqlitePath
 }
 
+func GetDatabaseType() string {
+	if cfg.DatabaseType != "" {
+
+		return cfg.DatabaseType
+	}
+
+	return "sqlite"
+}
+
+func GetPostgresDSN() string {
+
+	return cfg.PostgresDSN
+}
+
 func GetOutputLog() string {
 	if cfg.OutputLog != "" {
 

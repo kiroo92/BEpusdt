@@ -7,6 +7,8 @@ type Conf struct {
 	OutputLog    string `toml:"output_log"`
 	StaticPath   string `toml:"static_path"`
 	SqlitePath   string `toml:"sqlite_path"`
+	DatabaseType string `toml:"database_type"`
+	PostgresDSN  string `toml:"postgres_dsn"`
 	TronGrpcNode string `toml:"tron_grpc_node"`
 	AptosRpcNode string `toml:"aptos_rpc_node"`
 	WebhookUrl   string `toml:"webhook_url"`

@@ -1,6 +1,6 @@
 services: 
   bepusdt: 
-    image: v03413/bepusdt:latest # 如果想使用最新的开发版本，可以将镜像名 latest 替换为 beta
+    build: .
     container_name: bepusdt 
     restart: unless-stopped 
     ports: 
@@ -8,3 +8,21 @@ services:
     volumes: 
       - ./conf.toml:/usr/local/bepusdt/conf.toml
       - ./data:/var/lib/bepusdt
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: bepusdt-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bepusdt
+      POSTGRES_PASSWORD: bepusdt
+      POSTGRES_DB: bepusdt
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
