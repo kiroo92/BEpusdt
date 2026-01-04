@@ -14,7 +14,10 @@ database_type = "sqlite"
 # 格式：host=localhost port=5432 user=用户名 password=密码 dbname=数据库名 sslmode=disable
 postgres_dsn = ""
 # Tron网络GRPC节点，可选列表：https://developers.tron.network/docs/networks#public-node
-tron_grpc_node = "18.141.79.38:50051"
+tron_grpc_node = "grpc.trongrid.io:50051"
+# TronGrid API Key（可选，推荐配置以提高请求限制）
+# 获取地址：https://www.trongrid.io/
+tron_api_key = ""
 # 日志输出路径
 output_log = "/var/log/bepusdt.log"
 # Webhook地址，留空则不启用
