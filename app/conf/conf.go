@@ -10,7 +10,6 @@ type Conf struct {
 	DatabaseType string `toml:"database_type"`
 	PostgresDSN  string `toml:"postgres_dsn"`
 	TronGrpcNode string `toml:"tron_grpc_node"`
-	TronApiKey   string `toml:"tron_api_key"`
 	AptosRpcNode string `toml:"aptos_rpc_node"`
 	WebhookUrl   string `toml:"webhook_url"`
 	Pay          struct {

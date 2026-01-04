@@ -400,7 +400,7 @@ func getTronWalletInfo(address string) string {
 		Backoff:           backoff.Config{BaseDelay: 1 * time.Second, MaxDelay: 30 * time.Second, Multiplier: 1.5},
 		MinConnectTimeout: 1 * time.Minute,
 	}
-	conn, err := grpc.NewClient(conf.GetTronGrpcNode(), append([]grpc.DialOption{grpc.WithConnectParams(grpcParams), grpc.WithTransportCredentials(insecure.NewCredentials())}, conf.GetTronGrpcDialOptions()...)...)
+	conn, err := grpc.NewClient(conf.GetTronGrpcNode(), grpc.WithConnectParams(grpcParams), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Warn("getTronWalletInfo Error NewClient:", err)
 
@@ -437,7 +437,7 @@ func getTronUsdtBalance(address string) string {
 		Backoff:           backoff.Config{BaseDelay: 1 * time.Second, MaxDelay: 30 * time.Second, Multiplier: 1.5},
 		MinConnectTimeout: 1 * time.Minute,
 	}
-	conn, err := grpc.NewClient(conf.GetTronGrpcNode(), append([]grpc.DialOption{grpc.WithConnectParams(grpcParams), grpc.WithTransportCredentials(insecure.NewCredentials())}, conf.GetTronGrpcDialOptions()...)...)
+	conn, err := grpc.NewClient(conf.GetTronGrpcNode(), grpc.WithConnectParams(grpcParams), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Warn("getTronUsdtBalance Error NewClient:", err)
 

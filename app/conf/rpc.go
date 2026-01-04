@@ -1,12 +1,5 @@
 package conf
 
-import (
-	"context"
-
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/metadata"
-)
-
 func GetTronGrpcNode() string {
 	if cfg.TronGrpcNode != "" {
 
@@ -14,23 +7,6 @@ func GetTronGrpcNode() string {
 	}
 
 	return defaultTronGrpcNode
-}
-
-func GetTronApiKey() string {
-	return cfg.TronApiKey
-}
-
-// GetTronGrpcDialOptions 返回 TRON GRPC 连接的额外选项（包含 API Key）
-func GetTronGrpcDialOptions() []grpc.DialOption {
-	var opts []grpc.DialOption
-	apiKey := GetTronApiKey()
-	if apiKey != "" {
-		opts = append(opts, grpc.WithUnaryInterceptor(func(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
-			ctx = metadata.AppendToOutgoingContext(ctx, "TRON-PRO-API-KEY", apiKey)
-			return invoker(ctx, method, req, reply, cc, opts...)
-		}))
-	}
-	return opts
 }
 
 func GetAptosRpcNode() string {

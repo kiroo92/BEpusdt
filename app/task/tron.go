@@ -69,7 +69,7 @@ func (t *tron) blockRoll(context.Context) {
 		return
 	}
 
-	conn, err := grpc.NewClient(conf.GetTronGrpcNode(), append([]grpc.DialOption{grpc.WithConnectParams(grpcParams), grpc.WithTransportCredentials(insecure.NewCredentials())}, conf.GetTronGrpcDialOptions()...)...)
+	conn, err := grpc.NewClient(conf.GetTronGrpcNode(), grpc.WithConnectParams(grpcParams), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Error("grpc.NewClient", err)
 
@@ -140,7 +140,7 @@ func (t *tron) blockParse(n any) {
 	var node = conf.GetTronGrpcNode()
 	var conn *grpc.ClientConn
 	var err error
-	if conn, err = grpc.NewClient(node, append([]grpc.DialOption{grpc.WithConnectParams(grpcParams), grpc.WithTransportCredentials(insecure.NewCredentials())}, conf.GetTronGrpcDialOptions()...)...); err != nil {
+	if conn, err = grpc.NewClient(node, grpc.WithConnectParams(grpcParams), grpc.WithTransportCredentials(insecure.NewCredentials())); err != nil {
 		log.Error("grpc.NewClient", err)
 
 		return
@@ -405,7 +405,7 @@ func (t *tron) tradeConfirmHandle(ctx context.Context) {
 	var wg sync.WaitGroup
 
 	var handle = func(o model.TradeOrders) {
-		conn, err := grpc.NewClient(conf.GetTronGrpcNode(), append([]grpc.DialOption{grpc.WithConnectParams(grpcParams), grpc.WithTransportCredentials(insecure.NewCredentials())}, conf.GetTronGrpcDialOptions()...)...)
+		conn, err := grpc.NewClient(conf.GetTronGrpcNode(), grpc.WithConnectParams(grpcParams), grpc.WithTransportCredentials(insecure.NewCredentials()))
 		if err != nil {
 			log.Error("grpc.NewClient", err)
 
