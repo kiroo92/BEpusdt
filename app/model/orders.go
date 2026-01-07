@@ -54,7 +54,7 @@ const (
 var calcMutex sync.Mutex
 
 type TradeOrders struct {
-	Id          int64     `gorm:"primary_key;AUTO_INCREMENT;comment:id"`
+	Id          int64     `gorm:"primary_key;autoIncrement;comment:id"`
 	OrderId     string    `gorm:"column:order_id;type:varchar(128);not null;index;comment:商户ID"`
 	TradeId     string    `gorm:"column:trade_id;type:varchar(128);not null;uniqueIndex;comment:本地ID"`
 	TradeType   string    `gorm:"column:trade_type;type:varchar(20);not null;comment:交易类型"`
@@ -64,14 +64,14 @@ type TradeOrders struct {
 	Money       float64   `gorm:"type:decimal(10,2);not null;default:0;comment:订单交易金额"`
 	Address     string    `gorm:"column:address;type:varchar(64);not null;comment:收款地址"`
 	FromAddress string    `gorm:"type:varchar(34);not null;default:'';comment:支付地址"`
-	Status      int       `gorm:"type:tinyint(1);not null;default:1;index;comment:交易状态"`
+	Status      int       `gorm:"type:smallint;not null;default:1;index;comment:交易状态"`
 	Name        string    `gorm:"type:varchar(64);not null;default:'';comment:商品名称"`
 	ApiType     string    `gorm:"type:varchar(20);not null;default:'epusdt';comment:API类型"`
 	ReturnUrl   string    `gorm:"type:varchar(255);not null;default:'';comment:同步地址"`
 	NotifyUrl   string    `gorm:"type:varchar(255);not null;default:'';comment:异步地址"`
-	NotifyNum   int       `gorm:"column:notify_num;type:int(11);not null;default:0;comment:回调次数"`
-	NotifyState int       `gorm:"column:notify_state;type:tinyint(1);not null;default:0;comment:回调状态 1：成功 0：失败"`
-	RefBlockNum int64     `gorm:"type:bigint(20);not null;default:0;comment:交易所在区块"`
+	NotifyNum   int       `gorm:"column:notify_num;type:integer;not null;default:0;comment:回调次数"`
+	NotifyState int       `gorm:"column:notify_state;type:smallint;not null;default:0;comment:回调状态 1：成功 0：失败"`
+	RefBlockNum int64     `gorm:"type:bigint;not null;default:0;comment:交易所在区块"`
 	ExpiredAt   time.Time `gorm:"column:expired_at;type:timestamp;not null;comment:失效时间"`
 	CreatedAt   time.Time `gorm:"autoCreateTime;type:timestamp;not null;comment:创建时间"`
 	UpdatedAt   time.Time `gorm:"autoUpdateTime;type:timestamp;not null;comment:更新时间"`

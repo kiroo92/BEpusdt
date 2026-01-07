@@ -11,7 +11,7 @@ func (c Config) TableName() string {
 }
 
 func SetK(k, v string) {
-	DB.Exec("REPLACE INTO config (k, v) VALUES (?, ?)", k, v)
+	DB.Save(&Config{K: k, V: v})
 }
 
 func GetK(k string) string {

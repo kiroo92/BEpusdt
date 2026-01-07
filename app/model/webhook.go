@@ -27,9 +27,9 @@ const (
 var WebhookHandleQueue = chanx.NewUnboundedChan[Webhook](context.Background(), 30)
 
 type Webhook struct {
-	ID        int64           `gorm:"column:id;type:INTEGER PRIMARY KEY AUTOINCREMENT;" json:"id"`
-	Status    int8            `gorm:"column:status;type:tinyint;not null;default:0" json:"status"`
-	Num       int             `gorm:"column:num;type:int(11);not null;default:0" json:"hook_num"`
+	ID        int64           `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
+	Status    int8            `gorm:"column:status;type:smallint;not null;default:0" json:"status"`
+	Num       int             `gorm:"column:num;type:integer;not null;default:0" json:"hook_num"`
 	Url       string          `gorm:"column:url;type:varchar(255);not null;default:''" json:"url"`
 	Event     string          `gorm:"column:event;type:varchar(64);not null;default:''" json:"event"`
 	Data      json.RawMessage `gorm:"column:data;type:json;not null" json:"data"`
