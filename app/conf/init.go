@@ -171,24 +171,6 @@ func GetStaticPath() string {
 	return cfg.StaticPath
 }
 
-func GetSqlitePath() string {
-	if cfg.SqlitePath != "" {
-
-		return cfg.SqlitePath
-	}
-
-	return defaultSqlitePath
-}
-
-func GetDatabaseType() string {
-	if cfg.DatabaseType != "" {
-
-		return cfg.DatabaseType
-	}
-
-	return "sqlite"
-}
-
 func GetPostgresDSN() string {
 
 	return cfg.PostgresDSN

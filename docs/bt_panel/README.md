@@ -10,12 +10,12 @@
 文件：https://github.com/v03413/BEpusdt/releases/latest/download/linux-amd64-BEpusdt.tar.gz 下载解压，将文件夹重命名为
 `BEpusdt`，然后将其上传到服务器的 `/opt` 目录下。
 
-![配置文件](./img/1.1.png)  
-打开配置文件`conf.simple.toml`进行调整，红框所示内容必须修改，同时最好增加指定日志和数据文件路径。
+![配置文件](./img/1.1.png)
+打开配置文件`conf.simple.toml`进行调整，红框所示内容必须修改，同时最好增加指定日志路径和 PostgreSQL 连接配置。
 
 ```toml
 output_log = "/opt/BEpusdt/bepusdt.log"
-sqlite_path = "/opt/BEpusdt/sqlite.db"
+postgres_dsn = "host=localhost port=5432 user=bepusdt password=bepusdt dbname=bepusdt sslmode=disable"
 ```
 
 ![可执行权限](./img/1.2.png)  

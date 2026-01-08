@@ -15,11 +15,11 @@ PS：默认认为你已经安装好`1Panel`，并且能够正常使用。
 
 ![配置文件](./img/daemon/1.2.png)
 
-日志和数据路径配置：
+日志路径和 PostgreSQL 连接配置：
 
 ```toml
 output_log = "/opt/BEpusdt/bepusdt.log"
-sqlite_path = "/opt/BEpusdt/sqlite.db"
+postgres_dsn = "host=localhost port=5432 user=bepusdt password=bepusdt dbname=bepusdt sslmode=disable"
 ```
 
 填写信息无误后确认保存。

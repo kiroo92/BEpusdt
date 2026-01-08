@@ -6,13 +6,9 @@ auth_token = "123234"
 listen = ":8080"
 # 静态资源路径，例如：/root/bepusdt/static；通过此参数可自定义模板，参考static目录，如非必要不建议修改。
 static_path = ""
-# SQLite数据库路径（database_type 为 sqlite 时使用）
-sqlite_path = "/var/lib/bepusdt/sqlite.db"
-# 数据库类型，支持 sqlite 和 postgres（默认 sqlite）
-database_type = "sqlite"
-# PostgreSQL 连接字符串（database_type 为 postgres 时使用）
+# PostgreSQL 连接字符串（必填）
 # 格式：host=localhost port=5432 user=用户名 password=密码 dbname=数据库名 sslmode=disable
-postgres_dsn = ""
+postgres_dsn = "host=localhost port=5432 user=bepusdt password=bepusdt dbname=bepusdt sslmode=disable"
 # Tron网络GRPC节点，可选列表：https://developers.tron.network/docs/networks#public-node
 tron_grpc_node = "18.141.79.38:50051"
 # 日志输出路径

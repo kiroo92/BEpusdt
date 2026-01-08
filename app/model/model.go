@@ -2,42 +2,23 @@ package model
 
 import (
 	"fmt"
-	"github.com/glebarez/sqlite"
 	"github.com/v03413/bepusdt/app/conf"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"os"
-	"path/filepath"
 )
 
 var DB *gorm.DB
 var err error
 
 func Init() error {
-	dbType := conf.GetDatabaseType()
+	dsn := conf.GetPostgresDSN()
+	if dsn == "" {
+		return fmt.Errorf("PostgreSQL DSN 不能为空")
+	}
 
-	switch dbType {
-	case "postgres", "postgresql", "pg":
-		dsn := conf.GetPostgresDSN()
-		if dsn == "" {
-			return fmt.Errorf("PostgreSQL DSN 不能为空")
-		}
-
-		DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
-		if err != nil {
-			return fmt.Errorf("PostgreSQL 数据库初始化失败：%w", err)
-		}
-	default:
-		// 默认使用 SQLite
-		var path = conf.GetSqlitePath()
-		if err := os.MkdirAll(filepath.Dir(path), os.ModePerm); err != nil {
-			return fmt.Errorf("创建数据库目录失败：%w", err)
-		}
-
-		DB, err = gorm.Open(sqlite.Open(path), &gorm.Config{})
-		if err != nil {
-			return fmt.Errorf("SQLite 数据库初始化失败：%w", err)
-		}
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		return fmt.Errorf("PostgreSQL 数据库初始化失败：%w", err)
 	}
 
 	if err = AutoMigrate(); err != nil {

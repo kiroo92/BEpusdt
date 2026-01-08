@@ -33,7 +33,6 @@ const (
 	defaultBaseRpcEndpoint     = "https://base-public.nodies.app/"                // 默认Base RPC节点 官方 https://mainnet.base.org 存在速率限制
 	defaultAptosRpcEndpoint    = "https://aptos-rest.publicnode.com/"             // 默认Aptos RPC节点
 	defaultOutputLog           = "/var/log/bepusdt.log"                           // 默认日志输出文件
-	defaultSqlitePath          = "/var/lib/bepusdt/sqlite.db"                     // 默认数据库文件
 )
 
 const (

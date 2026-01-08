@@ -2,6 +2,8 @@
 app_uri = "https://coin.example.com"
 auth_token = "123234zxc"
 listen = ":8080"
+# PostgreSQL 连接字符串（必填）
+postgres_dsn = "host=localhost port=5432 user=bepusdt password=bepusdt dbname=bepusdt sslmode=disable"
 
 [pay]
 usdt_rate = "~0.98"

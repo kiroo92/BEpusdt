@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(go build:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(go mod tidy)"
     ]
   }
 }
