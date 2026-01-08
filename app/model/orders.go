@@ -60,7 +60,7 @@ type TradeOrders struct {
 	TradeType   string    `gorm:"column:trade_type;type:varchar(20);not null;comment:交易类型"`
 	TradeHash   string    `gorm:"column:trade_hash;type:varchar(130);default:'';unique;comment:交易哈希"`
 	TradeRate   string    `gorm:"column:trade_rate;type:varchar(10);not null;comment:交易汇率"`
-	Amount      string    `gorm:"type:decimal(10,2);not null;default:0;comment:交易数额"`
+	Amount      string    `gorm:"type:varchar(32);not null;default:'0';comment:交易数额"`
 	Money       float64   `gorm:"type:decimal(10,2);not null;default:0;comment:订单交易金额"`
 	Address     string    `gorm:"column:address;type:varchar(64);not null;comment:收款地址"`
 	FromAddress string    `gorm:"type:varchar(34);not null;default:'';comment:支付地址"`
