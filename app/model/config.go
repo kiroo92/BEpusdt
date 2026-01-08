@@ -1,5 +1,9 @@
 package model
 
+import (
+	"gorm.io/gorm/clause"
+)
+
 type Config struct {
 	K string `gorm:"column:k;type:varchar(32);primaryKey"`
 	V string `gorm:"column:v;type:varchar(255)"`
@@ -11,7 +15,10 @@ func (c Config) TableName() string {
 }
 
 func SetK(k, v string) {
-	DB.Save(&Config{K: k, V: v})
+	DB.Clauses(clause.OnConflict{
+		Columns:   []clause.Column{{Name: "k"}},
+		DoUpdates: clause.AssignmentColumns([]string{"v"}),
+	}).Create(&Config{K: k, V: v})
 }
 
 func GetK(k string) string {
