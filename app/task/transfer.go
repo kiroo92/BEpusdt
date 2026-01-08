@@ -63,12 +63,8 @@ func orderTransferHandle(context.Context) {
 	for transfers := range transferQueue.Out {
 		var other = make([]transfer, 0)
 		var orders = getAllWaitingOrders()
-		for _, t := range transfers {
-			// debug
-			//if t.TradeType == model.OrderTradeTypeBnbBep20 {
-			//	log.Info("transfer:", t.TradeType, t.TxHash, t.FromAddress, t.RecvAddress, t.Amount.String())
-			//}
 
+		for _, t := range transfers {
 			// 对 EVM 链的地址进行小写标准化，确保与订单中的地址一致
 			if t.TradeType == model.OrderTradeTypeEthErc20 ||
 				t.TradeType == model.OrderTradeTypeBnbBep20 ||
@@ -80,27 +76,38 @@ func orderTransferHandle(context.Context) {
 
 			// 判断金额是否在允许范围内
 			if !inAmountRange(t.Amount, t.TradeType) {
-				//if t.TradeType == model.OrderTradeTypeBnbBep20 {
-				//	log.Warn(fmt.Sprintf("BNB 交易金额低于配置的最小值: %s", t.Amount.String()))
-				//}
 				continue
 			}
 
+			// DEBUG: 打印链上交易和订单对比
+			if t.TradeType == model.OrderTradeTypeUsdtBep20 {
+				fmt.Printf("[DEBUG] 链上交易 - TxHash: %s, Address: %s, Amount: %q\n",
+					t.TxHash, t.RecvAddress, t.Amount.String())
+				for key, order := range orders {
+					if order.TradeType == model.OrderTradeTypeUsdtBep20 {
+						fmt.Printf("[DEBUG] 订单对比 - Key: %s, Address: %s, ActualAmount: %q, 匹配: %v\n",
+							key, order.Address, order.Amount,
+							order.Address == t.RecvAddress && order.Amount == t.Amount.String())
+					}
+				}
+			}
+
 			// 判断是否存在对应订单
-			o, ok := orders[fmt.Sprintf("%s%v%s", t.RecvAddress, t.Amount.String(), t.TradeType)]
+			matchKey := fmt.Sprintf("%s%v%s", t.RecvAddress, t.Amount.String(), t.TradeType)
+			o, ok := orders[matchKey]
 			if !ok {
 				other = append(other, t)
-
 				continue
 			}
 
 			// 有效期检测
 			if !o.CreatedAt.Before(t.Timestamp) || !o.ExpiredAt.After(t.Timestamp) {
-
 				continue
 			}
 
 			// 进入确认状态
+			fmt.Printf("[DEBUG] 匹配成功! OrderId: %s, ActualAmount: %s, 链上Amount: %s\n",
+				o.OrderId, o.Amount, t.Amount.String())
 			o.MarkConfirming(t.BlockNum, t.FromAddress, t.TxHash, t.Timestamp)
 		}
 
@@ -239,7 +246,9 @@ func getAllWaitingOrders() map[string]model.TradeOrders {
 		// 对需要小写处理的地址进行标准化
 		if order.TradeType == model.OrderTradeTypeUsdtPolygon ||
 			order.TradeType == model.OrderTradeTypeEthErc20 ||
-			order.TradeType == model.OrderTradeTypeBnbBep20 {
+			order.TradeType == model.OrderTradeTypeBnbBep20 ||
+			order.TradeType == model.OrderTradeTypeUsdtBep20 ||
+			order.TradeType == model.OrderTradeTypeUsdcBep20 {
 			order.Address = strings.ToLower(order.Address)
 		}
 
